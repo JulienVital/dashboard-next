@@ -7,28 +7,35 @@ const options = {
     hostname: 'localhost',
     port: 6000,
     path: '/',
-    method: 'GET'
-  };
+    method: 'POST', // Change to POST
+    headers: {
+        'Content-Type': 'application/json', // Set the content type to JSON
+        'Content-Length': Buffer.byteLength(JSON.stringify({ message: commitMessage }))
+    }
+};
 
 // Créer la requête HTTP
 const req = http.request(options, (res) => {
+    res.on('data', (chunk) => {
+        console.log(`Réponse : ${chunk.toString()}`);
+    });
 
-  res.on('end', () => {
-    if (res.statusCode === 200) {
-      console.log('Timesheet wizard completed !!!');
-    } else {
-      console.log(`Erreur : Code de statut ${res.statusCode}`);
-    }
-    // Terminer le processus après la réponse
-    process.exit(0);
-  });
+    res.on('end', () => {
+        if (res.statusCode === 200) {
+            console.log('Timesheet wizard completed !!!');
+        } else {
+            console.log(`Erreur : Code de statut ${res.statusCode}`);
+        }
+        // Terminer le processus après la réponse
+        process.exit(0);
+    });
 });
 
 // Gérer les erreurs
 req.on('error', (e) => {
-  console.error(`Problème avec la requête : ${e.message}`);
-  // Terminer le processus en cas d'erreur
-  process.exit(1);
+    console.error(`Problème avec la requête : ${e.message}`);
+    // Terminer le processus en cas d'erreur
+    process.exit(1);
 });
 
 // Préparer les données à envoyer
