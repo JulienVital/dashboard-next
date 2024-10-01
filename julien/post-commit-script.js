@@ -12,15 +12,10 @@ const options = {
 
 // Créer la requête HTTP
 const req = http.request(options, (res) => {
-  console.log(`Statut HTTP : ${res.statusCode}`);
-
-  res.on('data', (chunk) => {
-    console.log(`Réponse : ${chunk}`);
-  });
 
   res.on('end', () => {
     if (res.statusCode === 200) {
-      console.log('Requête GET réussie.');
+      console.log('Timesheet wizard completed !!!');
     } else {
       console.log(`Erreur : Code de statut ${res.statusCode}`);
     }
