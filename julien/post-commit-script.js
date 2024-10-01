@@ -1,6 +1,20 @@
 // Récupérer le message de commit passé en argument
 const commitMessage = process.argv[2];
+const { exec } = require('child_process');
 
+exec('git rev-parse --abbrev-ref HEAD', (error, stdout, stderr) => {
+    if (error) {
+        console.error(`Erreur lors de l'exécution de la commande : ${error.message}`);
+        return;
+    }
+    if (stderr) {
+        console.error(`Erreur dans la sortie standard : ${stderr}`);
+        return;
+    }
+    
+    const branchName = stdout.trim(); // Supprimer les espaces vides
+    console.log(`Nom de la branche active : ${branchName}`);
+});
 const http = require('http');
 
 const options = {
