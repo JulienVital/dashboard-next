@@ -2,6 +2,7 @@
 const commitMessage = process.argv[2];
 
 const { exec } = require('child_process');
+console.info(`....... Ninja !!!`);
 
 exec('git rev-parse --abbrev-ref HEAD', (error, stdout, stderr) => {
     if (error) {
