@@ -92,6 +92,7 @@ export async function fetchFilteredInvoices(
   currentPage: number,
 ) {
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+  await new Promise((resolve) => setTimeout(resolve, 2000));
 
   try {
     const invoices = await sql<InvoicesTable>`
